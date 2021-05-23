@@ -1,0 +1,25 @@
+.ibox {
+    position: relative;
+    margin-bottom: 25px;
+    background-color: $whiteColor;
+    // -webkit-box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+    // box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+}
+.widget-stat .ibox-body {
+    padding: 12px 15px;
+}
+
+.ibox .ibox-body {
+    padding: 15px 20px 20px 20px;
+}
+.widget-stat-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 100%;
+    line-height: 100px;
+    text-align: center;
+    font-size: 30px;
+    background-color: $backgroundColorIcon;
+}
