@@ -7,6 +7,7 @@ import { useFormInput } from "../../../utils/hooks";
 import { connect } from "react-redux";
 import { getProduct, addProduct , updateProduct} from "../../../actions/products";
 import { fetchCategories } from "../../../actions/categories";
+import { fetchMaterial } from "../../../actions/material";
 import { useParams } from "react-router-dom";
 import {imageUpload} from "../../../utils/imageUpload"
 
@@ -17,10 +18,12 @@ function AddProduct({ addProduct,
                         getProduct, 
                         getProductState , 
                         fetchCategories, 
+                        fetchMaterial,
                         getCategoriesState, 
                         token,
                         updateProduct,
-                        updateProductState
+                        updateProductState,
+                        getMaterialState
                                         }) {
     const { TextArea } = Input;
     const { Option } = Select;
@@ -43,6 +46,7 @@ function AddProduct({ addProduct,
             getProduct(params.id);
         }
         fetchCategories()
+        fetchMaterial()
     }, []);
 
     useEffect(() => {
@@ -58,7 +62,7 @@ function AddProduct({ addProduct,
                 setDescription(product.description)
                 setContent(product.content)
                 setCategory(product.category)
-                // setCategory(product.material)
+                setMaterial(product.material)
             }
         }
     }, [getProductState.success]);
@@ -67,7 +71,7 @@ function AddProduct({ addProduct,
         let auth = await jwt_decode(token)
         if(auth.role !== 'admin') 
         // return dispatch({type: 'NOTIFY', payload: {error: 'Authentication is not valid.'}})
-        return message.info('Authentication is not valid.');
+        // return message.info('Authentication is not valid.');
 
         if(!title || !price || !inStock || !description || !content || category === 'all' || images.length === 0)
         // return dispatch({type: 'NOTIFY', payload: {error: 'Please add all the fields.'}})
@@ -143,6 +147,9 @@ function AddProduct({ addProduct,
     const onChangeCategory = (value) => {
         setCategory(value)
     }
+    const onChangeMaterial = (value) => {
+        setMaterial(value)
+    }
     const onchangeDescription = (e) => {
         setDescription(e.target.value)
     }
@@ -151,7 +158,7 @@ function AddProduct({ addProduct,
     }
     return (
         <>
-            <h3>{params.id ? "Update user" : "Add user"}</h3>
+            <h3>{params.id ? "Update product" : "Add product"}</h3>
             <Row>
                 <Col span= {12}>
                     <Form style={{padding: '0 20px 0 0'}}>
@@ -198,7 +205,7 @@ function AddProduct({ addProduct,
                                         style={{ width: 300 }}
                                         placeholder="Select a category"
                                         optionFilterProp="children"
-                                        onChange={onChangeCategory}
+                                        // onChange={onChangeCategory}
                                         filterOption={(input, option) =>
                                         option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                         }
@@ -212,25 +219,29 @@ function AddProduct({ addProduct,
                                         }
                                     </Select>
                                  </Col>
-                                 {/* <Col span={12} >
+
+                                 <Col span={12} style={{ marginBottom: "20px" }} >
                                     Material <br></br>
                                     <Select
                                         showSearch
                                         style={{ width: 300 }}
-                                        placeholder="Select a category"
+                                        placeholder="Select a material"
                                         optionFilterProp="children"
-                                        onChange={onChangeCategory}
+                                        // onChange={onChangeMaterial}
                                         filterOption={(input, option) =>
-                                        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                         }
-                                        defaultValue= 'all'
+                                        value={material}
+                                        onChange={value => setMaterial(value)}
                                     >
+                                        {
+                                            getMaterialState.map( item=>(
+                                                <Option value={item._id}>{item.name}</Option>
+                                            ))
+                                        }
+                                    </Select>
+                                 </Col>
 
-                                        <Option value="jack">Jack</Option>
-                                        <Option value="lucy">Lucy</Option>
-                                        <Option value="tom">Tom</Option>
-                                    </Select>,
-                                </Col> */}
                                 <Button loading={addProductState.loading} onClick={submit}>
                                     Submit
                                  </Button>
@@ -286,9 +297,10 @@ function mapStateToProps(state) {
         addProductState: state.products.addProduct,
         getProductState: state.products.getProduct,
         getCategoriesState: state.categories.list.categories,
+        getMaterialState: state.material.list.material,
         token : state.auth.token,
         updateProductState: state.products.updateProduct
     };
 }
 
-export default connect(mapStateToProps, { getProduct, addProduct , updateProduct, fetchCategories})(AddProduct);
+export default connect(mapStateToProps, { getProduct, addProduct , updateProduct, fetchCategories , fetchMaterial})(AddProduct);

@@ -96,7 +96,83 @@ const Cart = () => {
     return <img className="img-responsive w-100" src="/empty_cart.jpg" alt="not empty"/>
 
     return(
-      <div className="row mx-auto">
+      <>
+        <section className="shoping-cart spad">
+        <div className="container">
+            <div className="row">
+                <div className="col-lg-12">
+                    <div className="shoping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Giá tiền</th>
+                                    <th>Số lượng </th>
+                                    <th>Tổng tiền</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              {
+                                cart.map(item => (
+                                  <CartItem key={item._id} item={item} dispatch={dispatch} cart={cart} />
+                                ))
+                              }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-lg-12">
+                    <div className="shoping__cart__btns">
+                        <a href="#" className="primary-btn cart-btn">Tiếp tục mua sắm</a>
+                        {/* <a href="#" className="primary-btn cart-btn cart-btn-right"><span className="icon_loading"></span>
+                            Upadate Cart</a> */}
+                    </div>
+                </div>
+                <div className="col-lg-6">
+                    
+                    <form className="spad">
+                      <h2>Shipping</h2>
+
+                      <label htmlFor="address">Address</label>
+                      <input type="text" name="address" id="address"
+                      className="form-control mb-2" value={address}
+                      onChange={e => setAddress(e.target.value)} />
+
+                      <label htmlFor="mobile">Mobile</label>
+                      <input type="text" name="mobile" id="mobile"
+                      className="form-control mb-2" value={mobile}
+                      onChange={e => setMobile(e.target.value)} />
+                    </form>
+                </div>
+                <div className="col-lg-6">
+                    <div className="shoping__continue">
+                          <div className="shoping__discount" style={{textAlign: 'center'}}>
+                              <h5>Mã giảm giá</h5>
+                              <form action="#" >
+                                  <input type="text" placeholder="Nhập mã giảm giá"/>
+                                  <button type="submit" className="site-btn">Áp dụng</button>
+                              </form>
+                          </div>
+                    </div>
+                    <div className="shoping__checkout">
+                        <h5>Giỏ hàng hiện tại</h5>
+                        <ul>
+                            <li>Tổng giá trị sản phẩm <span>{total}.000 đ</span></li>
+                            <li>Tổng giá tiền cần trả <span>{total}.000 đ</span></li>
+                        </ul>
+                        <Link href={auth.user ? '#!' : '/signin'}>
+                          <a className="primary-btn" onClick={handlePayment}>Đặt hàng và thanh toán</a>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+     
+      {/* <div className="row mx-auto">
         <Head>
           <title>Cart Page</title>
         </Head>
@@ -138,7 +214,8 @@ const Cart = () => {
             </Link>
             
         </div>
-      </div>
+      </div> */}
+      </>
     )
   }
   

@@ -8,6 +8,6 @@ module.exports = {
         "PAYPAL_CLIENT_ID": "AZG4eieQbGQIQShWfC8k5Khe0H0uMEPrzr-ay3A7LFRUizKN7GnjWPCy7eVvWAal8P-axZaFcPGhdZ1G",
         "CLOUD_UPDATE_PRESET": "do_an_tungpv",
         "CLOUD_NAME": "tungpv",
-        "CLOUD_API": "https://api.cloudinary.com/v1_1/tungpv/image/upload"
+        "CLOUD_API": "https://api.cloudinary.com/v1_1/tungpv/image/upload",
     }
 }

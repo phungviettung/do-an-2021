@@ -30,6 +30,8 @@ class APIfeatures {
 
         if(queryObj.category !== 'all')
             this.query.find({category: queryObj.category})
+        if(queryObj.material !== 'all')
+            this.query.find({material: queryObj.material})
         if(queryObj.title !== 'all')
             this.query.find({title: {$regex: queryObj.title}})
 
@@ -42,7 +44,7 @@ class APIfeatures {
             const sortBy = this.queryString.sort.split(',').join('')
             this.query = this.query.sort(sortBy)
         }else{
-            // this.query = this.query.sort('-createdAt')
+            this.query = this.query.sort('-createdAt')
         }
 
         return this;

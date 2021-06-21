@@ -116,7 +116,6 @@ const ProductsManager = () => {
 
     return(
         <div className="products_manager">
-            {JSON.stringify(product)}
             <Head>
                 <title>Products Manager</title>
             </Head>

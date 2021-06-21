@@ -42,7 +42,9 @@ const createCategory = async (req, res) => {
 }
 
 const getCategories = async (req, res) => {
+    const code_action = 'get_categories'
     try {
+        // const result = await auth(req, res, code_action)
         const categories = await Categories.find()
 
         res.json({categories})

@@ -30,6 +30,9 @@ const ListProduct = React.lazy(() => import("./views/components/products/ListPro
 const AddCategory = React.lazy(() => import("./views/components/categories/AddCategory"));
 const ListCategory = React.lazy(() => import("./views/components/categories/ListCategory"));
 
+const AddMaterial = React.lazy(() => import("./views/components/material/AddMaterial"));
+const ListMaterial = React.lazy(() => import("./views/components/material/ListMaterial"));
+
 const DetailOrder = React.lazy(() => import("./views/components/orders/DetailOrder"));
 const ListOrder = React.lazy(() => import("./views/components/orders/ListOrder"));
 
@@ -114,6 +117,32 @@ const routers = [
                 path: "/categories/edit/:id",
                 icon: <BarcodeOutlined />,
                 component: <AddCategory />,
+                hidden: true,
+            },
+        ],
+    },
+    {
+        name: "Material",
+        path: "/material",
+        icon: <BarcodeOutlined />,
+        children: [
+            {
+                name: "Add Material",
+                path: "/material/add",
+                icon: <BarcodeOutlined />,
+                component: <AddMaterial />,
+            },
+            {
+                name: "List Material",
+                path: "/material/list",
+                icon: <BarcodeOutlined />,
+                component: <ListMaterial />,
+            },
+            {
+                name: "Update Material",
+                path: "/material/edit/:id",
+                icon: <BarcodeOutlined />,
+                component: <AddMaterial />,
                 hidden: true,
             },
         ],

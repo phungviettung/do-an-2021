@@ -35,7 +35,7 @@ class ListProduct extends Component {
                     title: "Price",
                     key: "price",
                     dataIndex: "price",
-                    render: (text) => <div> {text} $ </div>
+                    render: (text) => <div> {text} .000đ </div>
                 },
                 {
                     title: "inStock",

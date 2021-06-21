@@ -4,11 +4,11 @@ import {useRouter} from 'next/router'
 import {DataContext} from '../store/GlobalState'
 import Cookie from 'js-cookie'
 
+
 function NavBar() {
     const router = useRouter()
     const {state, dispatch} = useContext(DataContext)
-    const { auth, cart } = state
-
+    const { auth, cart, categories, material } = state
 
     const isActive = (r) => {
         if(r === router.pathname){
@@ -68,7 +68,122 @@ function NavBar() {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <div>
+        <header className="header">
+            <div className="header__top">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-6 col-md-6">
+                            <div className="header__top__left">
+                                <ul>
+                                    <li><i className="fa fa-envelope"></i> hello@gmail.com</li>
+                                    <li>Miễn phí vận chuyển cho đơn hàng từ 500.000 ₫</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div className="col-lg-6 col-md-6">
+                            <div className="header__top__right">
+                                <div className="header__top__right__social">
+                                    <a href="#"><i className="fa fa-facebook"></i></a>
+                                    <a href="#"><i className="fa fa-twitter"></i></a>
+                                    <a href="#"><i className="fa fa-linkedin"></i></a>
+                                    <a href="#"><i className="fa fa-pinterest-p"></i></a>
+                                </div>
+                                
+                                <div className="header__top__right__auth">
+                                    <div className="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                                        <ul className="navbar-nav p-1">
+                                            {
+                                            Object.keys(auth).length === 0 
+                                            ? <li className="nav-item">
+                                                <Link href="/signin">
+                                                        <a className={"nav-link" + isActive('/signin')} href="#">
+                                                            <i className="fa fa-user"></i> Đăng nhập
+                                                        </a>
+                                                </Link>
+                                            </li> 
+                                            : loggedRouter()
+                                        }
+                                        </ul>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-2">
+                        <div className="header__logo">
+                            <Link  href="/">
+                                <a ><img src="logo.png" alt=""/></a>
+                            </Link>
+                        </div>
+                    </div>
+                    <div className="col-lg-8">
+                        <nav className="header__menu">
+                            <ul>
+                                <li className="active"><a href="./index.html">Trang chủ</a></li>
+                                {/* <li><a href="./shop-grid.html">Chọn hoa</a></li> */}
+                                <li><a href="#">Chủ đề <i className="fa fa-sort-down"></i> </a>
+                                    <ul className="header__menu__dropdown">
+                                        {
+                                            categories.map(item => 
+                                                <li>
+                                                    <Link href={`?search=all&category=${item._id}`}>
+                                                        <a>{item.name}</a>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        }
+                                    </ul>
+                                </li>
+                                <li><a href="#">Thiết kế<i className="fa fa-sort-down"></i> </a>
+                                    <ul className="header__menu__dropdown">
+                                        {
+                                            material.map(item => 
+                                                <li>
+                                                    <Link href={`?search=all&material=${item._id}`}>
+                                                        <a>{item.name}</a>
+                                                    </Link>
+                                                </li>
+                                            )
+                                        }
+                                    </ul>
+                                </li>
+                                <li><a href="./blog.html">Blog</a></li>
+                                <li><a href="./contact.html">Liên hệ</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div className="col-lg-2">
+                        <div className="header__cart">
+                            <ul>
+                                {/* <li><a href="#"><i className="fa fa-heart"></i> <span>1</span></a></li> */}
+                                <li>
+                                    <Link href="/cart">
+                                        <a className={"" + isActive('/cart')} href="#">
+                                            <i className="fa fa-shopping-bag"></i>
+                                            <span>  {cart.length} </span>
+                                        </a>
+                                    </Link>
+                                </li>
+                            </ul>
+                            {/* <div className="header__cart__price">total: <span>{cart.total}</span></div> */}
+                        </div>
+                    </div>
+                </div>
+                <div className="humberger__open">
+                    <i className="fa fa-bars"></i>
+                </div>
+            </div>
+        </header>
+      
+
+        {/* <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <Link  href="/">
                 <a className="navbar-brand">tungpv</a>
             </Link>
@@ -110,7 +225,8 @@ function NavBar() {
                     }
                 </ul>
             </div>
-        </nav>
+        </nav> */}
+        </div>
     )
 }
 

@@ -17,11 +17,11 @@ const CartItem = ({item, dispatch, cart}) => {
                     </Link>
                 </h5>
 
-                <h6 className="text-danger">${item.quantity * item.price}</h6>
+                <h6 className="text-danger1">{item.price}.000 đ</h6>
                 {
                     item.inStock > 0
-                    ? <p className="mb-1 text-danger">In Stock: {item.inStock}</p>
-                    : <p className="mb-1 text-danger">Out Stock</p>
+                    ? <p className="mb-1 text-danger1">In Stock: {item.inStock}</p>
+                    : <p className="mb-1 text-danger1">Out Stock</p>
                 }
             </td>
 
@@ -36,7 +36,9 @@ const CartItem = ({item, dispatch, cart}) => {
                 onClick={ () => dispatch(increase(cart, item._id)) }
                 disabled={item.quantity === item.inStock ? true : false} > + </button>
             </td>
-
+            <td>
+                {item.quantity * item.price}.000 đ
+            </td>
             <td className="align-middle" style={{minWidth: '50px', cursor: 'pointer'}}>
                 <i className="far fa-trash-alt text-danger" aria-hidden="true" 
                 style={{fontSize: '18px'}} data-toggle="modal" data-target="#exampleModal"

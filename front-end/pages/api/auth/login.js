@@ -2,6 +2,7 @@ import connectDB from '../../../utils/connectDB'
 import Users from '../../../models/userModel'
 import bcrypt from 'bcrypt'
 import { createAccessToken, createRefreshToken } from '../../../utils/generateToken'
+import getPermission from '../../../utils/getPermission'
 import handler from '../../api/cors'
 
 connectDB()
@@ -25,10 +26,13 @@ const login = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password)
         if(!isMatch) return res.status(400).json({err: 'Incorrect password.'})
 
+        const author = await getPermission(user.id)
+
         const access_token = createAccessToken({
             id: user._id,
             name : user.name,
-            role : user.role
+            role : user.role,
+            idPermissAndAction : author.idPermissAndAction
         })
         const refresh_token = createRefreshToken({id: user._id})
         

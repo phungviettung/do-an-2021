@@ -30,6 +30,13 @@ function AddCategory({ addCategory,
     const params = useParams();
 
     useEffect(() => {
+        return () => {
+            addCategoryState.message = ''
+            updateCategoryState.message  = ''
+        }
+    }, [])
+
+    useEffect(() => {
         console.log("params: ", params);
         if (params.id) {
             getCategory(params.id);
@@ -47,12 +54,13 @@ function AddCategory({ addCategory,
         }
     }, [getCategoryState.success]);
 
+
     const submit = async () => {
 
         let auth = await jwt_decode(token)
-        if(auth.role !== 'admin') 
+        // if(auth.role !== 'admin') 
         // return dispatch({type: 'NOTIFY', payload: {error: 'Authentication is not vaild.'}})
-        return message.info('Authentication is not valid.');
+        // return message.info('Authentication is not valid.');
 
         if(!name) 
         // dispatch({type: 'NOTIFY', payload: {error: 'Name can not be left blank.'}})
@@ -83,7 +91,7 @@ function AddCategory({ addCategory,
     
     return (
         <>
-            <h3>{params.id ? "Update user" : "Add user"}</h3>
+            <h3>{params.id ? "Update category" : "Add category"}</h3>
             <Row>
                 <Col span= {24}>
                     <Form style={{padding: '0 20px 0 0'}}>
@@ -121,8 +129,6 @@ function AddCategory({ addCategory,
                     </Form>
                 </Col>
             </Row>
-            {JSON.stringify(addCategoryState)}
-            {JSON.stringify(updateCategoryState)}
         </>
     );
 }

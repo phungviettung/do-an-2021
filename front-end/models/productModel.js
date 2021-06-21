@@ -27,6 +27,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    material: {
+        type: String,
+        required: true
+    },
     checked: {
         type: Boolean,
         default: false

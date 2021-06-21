@@ -14,10 +14,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    role: {
-        type: String,
-        default: 'user'
-    },
+    // roles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'roles' }],
+    role: { type: String },
     root: {
         type: Boolean,
         default: false

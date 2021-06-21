@@ -152,7 +152,7 @@ function DetailOrder({
                     Not Delivered
                     </Tag>
                     {
-                        jwt_decode(token).role === 'admin' && !delivered &&
+                        // jwt_decode(token).role === 'admin' && !delivered &&
                         <button className="btn btn-dark text-uppercase"
                         onClick={() => handleDelivered()}>
                             Mark as delivered
@@ -210,7 +210,7 @@ function DetailOrder({
                     </h5>
         
                     <span className="text-info m-0">
-                        {item.quantity} x ${item.price} = ${item.price * item.quantity}
+                        {item.quantity} x {item.price}.000đ = {item.price * item.quantity}.000đ
                     </span>
         
                 </div>
