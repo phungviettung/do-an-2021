@@ -85,7 +85,8 @@ class ListProduct extends Component {
             key: "",
             current: 1,
             pageSize: 10,
-            category : 'all'
+            category : 'all',
+            material : 'all'
         };
         this.onSearchDebounce = this.debounce(this.onSearch, 1000);
     }
@@ -98,8 +99,8 @@ class ListProduct extends Component {
     };
 
     componentDidMount() {
-        const { key, current, pageSize, category } = this.state;
-        this.props.fetchProducts({ key, current, pageSize, category });
+        const { key, current, pageSize, category, material } = this.state;
+        this.props.fetchProducts({ key, current, pageSize, category, material });
     }
 
     onfetchProducts = (key, current, category) => {
