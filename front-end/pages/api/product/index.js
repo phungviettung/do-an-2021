@@ -60,36 +60,35 @@ class APIfeatures {
 }
 
 const getProducts = async (req, res) => {
-    try {
-        const features = new APIfeatures(Products.find(), req.query)
-        .filtering().sorting().paginating()
+        try {
+            const features = new APIfeatures(Products.find(), req.query)
+            .filtering().sorting().paginating()
 
-        const products = await features.query
-        
-        res.json({
-            status: 'success',
-            result: products.length,
-            products,
-            total : (await Products.find()).length
-        })
-    } catch (err) {
-        return res.status(500).json({err: err.message})
-    }
+            const products = await features.query
+            
+            res.json({
+                status: 'success',
+                result: products.length,
+                products,
+                total : (await Products.find()).length
+            })
+        } catch (err) {
+            return res.status(500).json({err: err.message})
+        }
 }
-
 const createProduct = async (req, res) => {
     try {
         const result = await auth(req, res)
         if(result.role !== 'admin') return res.status(400).json({err: 'Authentication is not valid.'})
 
-        const {title, price, inStock, description, content, category, images} = req.body
+        const {title, price, inStock, description, content, category,sale,material, images} = req.body
 
-        if(!title || !price || !inStock || !description || !content || category === 'all' || images.length === 0)
-        return res.status(400).json({err: 'Please add all the fields.'})
+        if(!title || !price || !description || !content || category === 'all' || images.length === 0)
+        return res.status(200).json({err: 'Please add all the fields.'})
 
 
         const newProduct = new Products({
-            title: title.toLowerCase(), price, inStock, description, content, category, images
+            title: title.toLowerCase(), price, inStock, description, content, category,material, sale, images
         })
 
         await newProduct.save()

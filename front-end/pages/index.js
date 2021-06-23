@@ -11,13 +11,13 @@ import Filter from '../components/Filter'
 
 const Home = (props) => {
   const [products, setProducts] = useState(props.products)
-
+  
   const [isCheck, setIsCheck] = useState(false)
   const [page, setPage] = useState(1)
   const router = useRouter()
 
   const {state, dispatch} = useContext(DataContext)
-  const {auth} = state
+  const {auth, productSale} = state
 
   useEffect(() => {
     setProducts(props.products)
@@ -71,6 +71,9 @@ const Home = (props) => {
 
   return(
     <div className="product">
+       <Head>
+                <title>Trang chủ </title>
+            </Head>
         <div className="container">
             <div className= "row">
                 <div className="col-lg-12 col-md-12">
@@ -89,7 +92,7 @@ const Home = (props) => {
                     <div className="row">
                         {
                         products.length === 0 
-                        ? <h2>No Products</h2>
+                        ? <h4>Không tìm thấy sản phẩm nào </h4>
 
                         : products.map(product => (
                             <ProductItem key={product._id} product={product} handleCheck={handleCheck} />
@@ -117,11 +120,11 @@ const Home = (props) => {
                     <div className="product__discount__slider">
                         <Slider {...settings}>
                             {
-                                products.length === 0 
-                                ? <h2>No Products Salling</h2>
+                                productSale.length === 0 
+                                ? <p>không tìm thấy sản phẩm</p>
 
-                                : products.map(product => (
-                                    <ProductItem key={product._id} product={product} discount={20} />
+                                : productSale.map(product => (
+                                    <ProductItem key={product._id} product={product} discount={ product.sale ? product.sale : 0} />
                                 ))
                             }
                         </Slider>
@@ -144,6 +147,8 @@ export async function getServerSideProps({query}) {
   const res = await getData(
     `product?limit=${page * 6}&category=${category}&sort=${sort}&title=${search}&material=${material}`
   )
+
+  // let productSale = res.products.filter(item => item.sale !== 0)
   // server side rendering
   return {
     props: {

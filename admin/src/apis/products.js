@@ -13,5 +13,6 @@ export default {
         methor : 'get',
         url : `${BaseApi}/api/product/${id}`,
     }),
-    updateProduct: (id, data) => axios.put(`${BaseApi}/api/product/${id}`, data)
+    updateProduct: (id, data) => axios.put(`${BaseApi}/api/product/${id}`, data),
+    deleteProduct: (id) => axios.delete(`${BaseApi}/api/product/${id}`),
 };

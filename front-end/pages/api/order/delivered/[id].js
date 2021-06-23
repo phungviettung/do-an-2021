@@ -51,7 +51,7 @@ const deliveredOrder = async(req, res) => {
                 result: {
                     paid: true, 
                     dateOfPayment: new Date().toISOString(), 
-                    method: 'Receive Cash', 
+                    method: 'Tiền mặt', 
                     delivered: true
                 }
             })

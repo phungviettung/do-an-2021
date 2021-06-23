@@ -23,18 +23,19 @@ export const addUser = (data) => (dispatch) => {
     users
         .addUser(data)
         .then((resp) => {
-            if (resp.data && resp.data.success && resp.data.message) {
+            console.log("🚀 ~ file: users.js ~ line 26 ~ .then ~ resp", resp)
+            if (resp.data && resp.data.success && resp.data.msg) {
                 dispatch({
                     type: type.ADD_USER_SUCCESS,
                     payload: {
-                        message: resp.data.message,
+                        message: resp.data.msg,
                     },
                 });
             } else {
                 dispatch({
                     type: type.ADD_USER_FAILED,
                     payload: {
-                        message: "Something went wrong!",
+                        message: resp.data.msg,
                     },
                 });
             }

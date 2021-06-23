@@ -1,0 +1,43 @@
+- Doc PayPal
+https://developer.paypal.com/docs/checkout/integrate/
+https://developer.paypal.com/developer/accounts/
+
+- Cloudinary
+https://cloudinary.com/console/c-736be254029736a8603fba7f987981
+
+-Convert currency
+https://free.currconv.com/api/v7/convert
+apiKey = '4251c5582e29176e0a63'
+
+- Accout sanbox PayPal
+sb-ln9lu6159615@personal.example.com
+jaL_M9rt
+
+- Acc admin (root)
+tungxyz.11@gmail.com
+123456
+
+- Acc user
+user1@gmail.com
+123456
+
+236, Hoàng Quốc Việt, Hà Nội
+0329015759
+
+bcrypt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{ DateAdded : { $gt:ISODate('Date here'), $lt:ISODate('Date here')}}

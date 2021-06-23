@@ -45,10 +45,10 @@ const Users = () => {
                                 <th>
                                     {
                                         user.role === 'admin'
-                                        ? user.root ? <i className="fas fa-check text-success"> Root</i>
-                                                    : <i className="fas fa-check text-success"></i>
+                                        ? user.root ? <i className="fa fa-check text-success"> Root</i>
+                                                    : <i className="fa fa-check text-success"></i>
 
-                                        :<i className="fas fa-times text-danger"></i>
+                                        :<i className="fa fa-times text-danger"></i>
                                     }
                                 </th>
                                 <th>
@@ -56,19 +56,19 @@ const Users = () => {
                                         auth.user.root && auth.user.email !== user.email
                                         ? `/edit_user/${user._id}` : '#!'
                                     }>
-                                        <a><i className="fas fa-edit text-info mr-2" title="Edit"></i></a>
+                                        <a><i className="fa fa-edit text-info mr-2" title="Edit"></i></a>
                                     </Link>
 
                                     {
                                         auth.user.root && auth.user.email !== user.email
-                                        ? <i className="fas fa-trash-alt text-danger ml-2" title="Remove"
+                                        ? <i className="fa fa-trash-alt text-danger ml-2" title="Remove"
                                         data-toggle="modal" data-target="#exampleModal"
                                         onClick={() => dispatch({
                                             type: 'ADD_MODAL',
                                             payload: [{ data: users, id: user._id, title: user.name, type: 'ADD_USERS' }]
                                         })}></i>
                                         
-                                        : <i className="fas fa-trash-alt text-danger ml-2" title="Remove"></i>
+                                        : <i className="fa fa-trash-alt text-danger ml-2" title="Remove"></i>
                                     }
 
                                 </th>

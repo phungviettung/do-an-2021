@@ -40,9 +40,11 @@ class ListUser extends Component {
                             { text == 'admin' ? 
                                 <Tag color={"green"} key={"1"}>
                                     {text}
-                                </Tag> : <Tag color={"red"} key={"1"}>
+                                </Tag> : (text == 'user' ? <Tag color={"red"} key={"1"}>
                                     {text}
-                                </Tag>
+                                </Tag> : <Tag color={"red"} key={"1"}>
+                                    user register
+                                </Tag>)
                             } 
                             
                         </>
@@ -73,7 +75,7 @@ class ListUser extends Component {
                     render: ({ _id , root }) => (
                         !root &&
                         <Space size="middle">
-                            <a>View</a>
+                            {/* <a>View</a> */}
                             {/* <a onClick={() => this.onEditUser(_id)}>Edit</a> */}
                             <Link to={`/users/edit/${_id}`}>Edit</Link>
                             <a>Delete</a>

@@ -15,7 +15,7 @@ export default {
                 url : `${BaseApi}/api/user?key=${data.key}&page=${data.current}&pageSize=${data.pageSize}`,
             }
         ),
-    addUser: (data) => axios.post(`${BaseApi}/api/users/add`, data),
+    addUser: (data) => axios.post(`${BaseApi}/api/auth/register`, data),
     // getUser: (id) => axios.get(`${BaseApi}/api/users/get?id=${id}`),
     getUser: (id) => axios({
         methor : 'get',

@@ -119,7 +119,7 @@ const { Option } = Select;
                         </Card>
                     </Col>
                     <Col span={8}>
-                    <Card title="Access device" bordered={false}>
+                    <Card title="Product Sales with category" bordered={false}>
                         <div className="chart2">
                             <Doughnut data={ dataChart2 } />
                         </div>

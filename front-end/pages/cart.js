@@ -6,12 +6,14 @@ import Link from 'next/link'
 import { getData, postData } from '../utils/fetchData'
 import { useRouter } from 'next/router'
 
-
 const Cart = () => {
   const { state, dispatch } = useContext(DataContext)
   const { cart, auth, orders } = state
 
   const [total, setTotal] = useState(0)
+
+  const [provice, setProvice] = useState('')
+  const [district, setDistrict] = useState('')
 
   const [address, setAddress] = useState('')
   const [mobile, setMobile] = useState('')
@@ -56,7 +58,7 @@ const Cart = () => {
 
   const handlePayment = async () => {
     if(!address || !mobile)
-    return dispatch({ type: 'NOTIFY', payload: {error: 'Please add your address and mobile.'}})
+    return dispatch({ type: 'NOTIFY', payload: {error: 'Nhập Số điện thoại và địa chỉ người nhận !'}})
 
     let newCart = [];
     for(const item of cart){
@@ -69,7 +71,7 @@ const Cart = () => {
     if(newCart.length < cart.length){
       setCallback(!callback)
       return dispatch({ type: 'NOTIFY', payload: {
-        error: 'The product is out of stock or the quantity is insufficient.'
+        error: 'Sản phẩm hết hàng hoặc số lượng không đủ.'
       }})
     }
 
@@ -87,6 +89,12 @@ const Cart = () => {
       }
       dispatch({ type: 'ADD_ORDERS', payload: [...orders, newOrder] })
       dispatch({ type: 'NOTIFY', payload: {success: res.msg} })
+
+      // send mail
+      // sendMailNoti(cart)
+      let newOrderRes = res.newOrder
+        postData('sendMail', {cart, newOrderRes })
+      // end send mail
       return router.push(`/order/${res.newOrder._id}`)
     })
 
@@ -126,7 +134,9 @@ const Cart = () => {
             <div className="row">
                 <div className="col-lg-12">
                     <div className="shoping__cart__btns">
-                        <a href="#" className="primary-btn cart-btn">Tiếp tục mua sắm</a>
+                      <Link href="/">
+                      <a  className="primary-btn cart-btn">Tiếp tục mua sắm</a>
+                      </Link>
                         {/* <a href="#" className="primary-btn cart-btn cart-btn-right"><span className="icon_loading"></span>
                             Upadate Cart</a> */}
                     </div>
@@ -134,17 +144,18 @@ const Cart = () => {
                 <div className="col-lg-6">
                     
                     <form className="spad">
-                      <h2>Shipping</h2>
+                      <h2>Thông tin giao hàng </h2>
 
-                      <label htmlFor="address">Address</label>
+                      <label htmlFor="address">Địa chỉ người nhận </label>
                       <input type="text" name="address" id="address"
                       className="form-control mb-2" value={address}
                       onChange={e => setAddress(e.target.value)} />
 
-                      <label htmlFor="mobile">Mobile</label>
+                      <label htmlFor="mobile">Số điện thoại người nhận</label>
                       <input type="text" name="mobile" id="mobile"
                       className="form-control mb-2" value={mobile}
                       onChange={e => setMobile(e.target.value)} />
+
                     </form>
                 </div>
                 <div className="col-lg-6">
@@ -170,6 +181,25 @@ const Cart = () => {
                 </div>
             </div>
         </div>
+        {/* <div className="row">
+                            <div className="col-md-5 mb-3">
+                                <label htmlFor="country">Tỉnh/Thành phố *</label>
+                                <select className="wide w-100" name="calc_shipping_provinces" required="" >
+                                    <option value="">Tỉnh / Thành phố</option>
+                                </select>
+                                <input className="billing_address_1" name="province" type="hidden" value=""  id="province"/>
+                                <div className="invalid-feedback"> Please select a valid country. </div>
+                            </div>
+                            <div className="col-md-4 mb-3">
+                                <label htmlFor="state">Quận/Huyện *</label>
+                                <select className="wide w-100" name="calc_shipping_district" required="" >
+                                    <option value="">Quận / Huyện</option>
+                                </select>
+                                <input className="billing_address_2" name="district" type="hidden" value="" id="district"/>
+                                <div className="invalid-feedback"> Please provide a valid state. </div>
+                            </div>          
+        </div> */}
+
     </section>
      
       {/* <div className="row mx-auto">

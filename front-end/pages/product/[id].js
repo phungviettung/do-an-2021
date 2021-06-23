@@ -6,7 +6,6 @@ import { addToCart } from '../../store/Actions'
 
 const DetailProduct = (props) => {
     const [product] = useState(props.product)
-    console.log("🚀 ~ file: [id].js ~ line 9 ~ DetailProduct ~ product", product)
     const [tab, setTab] = useState(0)
 
     const { state, dispatch } = useContext(DataContext)
@@ -20,7 +19,7 @@ const DetailProduct = (props) => {
     return(
         <>
             <Head>
-                <title>Detail Product</title>
+                <title>Chi tiết sản phẩm </title>
             </Head>
         <section className="product-details">
         <div className="container">
@@ -218,6 +217,9 @@ const DetailProduct = (props) => {
 export async function getServerSideProps({params: {id}}) {
 
     const res = await getData(`product/${id}`)
+    
+    const youMightAlsoLike = await getData(`product/${id}`)
+
     // server side rendering
     return {
       props: { product: res.product }, // will be passed to the page component as props

@@ -133,3 +133,10 @@ export const updateOrderDelivered = (id) => (dispatch) => {
             });
         });
 };
+
+export const deleteOrder = (id) => {
+    orders.deleteOrder(id)
+    .then(res=> {
+        console.log(res)
+    })
+}

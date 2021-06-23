@@ -22,7 +22,7 @@ function NavBar() {
         Cookie.remove('refreshtoken', {path: 'api/auth/accessToken'})
         localStorage.removeItem('firstLogin')
         dispatch({ type: 'AUTH', payload: {} })
-        dispatch({ type: 'NOTIFY', payload: {success: 'Logged out!'} })
+        dispatch({ type: 'NOTIFY', payload: {success: 'Bạn đã đăng xuất !'} })
         return router.push('/')
     }
 
@@ -126,7 +126,11 @@ function NavBar() {
                     <div className="col-lg-8">
                         <nav className="header__menu">
                             <ul>
-                                <li className="active"><a href="./index.html">Trang chủ</a></li>
+                                <li className="active">
+                                                    <Link href={`/`}>
+                                                        <a> Trang chủ </a>
+                                                    </Link>
+                                </li>
                                 {/* <li><a href="./shop-grid.html">Chọn hoa</a></li> */}
                                 <li><a href="#">Chủ đề <i className="fa fa-sort-down"></i> </a>
                                     <ul className="header__menu__dropdown">
@@ -154,8 +158,16 @@ function NavBar() {
                                         }
                                     </ul>
                                 </li>
-                                <li><a href="./blog.html">Blog</a></li>
-                                <li><a href="./contact.html">Liên hệ</a></li>
+                                <li>
+                                                    <Link href={`/`}>
+                                                        <a> Blog </a>
+                                                    </Link>
+                                </li>
+                                <li>
+                                                    <Link href={`/`}>
+                                                        <a> Liên hệ </a>
+                                                    </Link>
+                                </li>
                             </ul>
                         </nav>
                     </div>

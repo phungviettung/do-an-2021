@@ -8,7 +8,7 @@ export const DataContext = createContext()
 
 export const DataProvider = ({children}) => {
     const initialState = { 
-        notify: {}, auth: {}, cart: [], modal: [], orders: [], users: [], categories: [], material: []
+        notify: {}, auth: {}, cart: [], modal: [], orders: [], users: [], categories: [], material: [], productSale:[]
     }
 
     const [state, dispatch] = useReducer(reducers, initialState)
@@ -48,6 +48,16 @@ export const DataProvider = ({children}) => {
             })
         })
 
+        getData('productSale').then(res => {
+            console.log('res',res)
+            if(res.err) return dispatch({type: 'NOTIFY', payload: {error: res.err}})
+
+            dispatch({ 
+                type: "ADD_PRODUCT_SALE",
+                payload: res.productSale
+            })
+        })
+
     },[])
 
     useEffect(() => {
@@ -74,7 +84,7 @@ export const DataProvider = ({children}) => {
                 .then(res => {
                     if(res.err) return dispatch({type: 'NOTIFY', payload: {error: res.err}})
                 
-                    dispatch({type: 'ADD_USERS', payload: res.users})
+                    dispatch({type: 'ADD_USERS', payload: res.data})
                 })
             }
         }else{

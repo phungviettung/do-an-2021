@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Table, Tag, Space, Input, Avatar , Popconfirm, message} from "antd";
 import {CheckOutlined, CloseOutlined} from "@ant-design/icons"
 import { connect } from "react-redux";
-import { fetchProducts } from "../../../actions/products";
+import { fetchProducts, deleteProduct } from "../../../actions/products";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -69,15 +69,20 @@ class ListProduct extends Component {
                             {/* <a>View</a> */}
                             {/* <a onClick={() => this.onEditUser(id)}>Edit</a> */}
                             <Link to={`/products/edit/${_id}`}>Edit</Link>
-                            <Popconfirm
-                                title="Are you sure to delete this task?"
-                                onConfirm={this.confirm}
+                            <a onClick={() => this.onDeleteProduct(_id)}>Delete</a>
+
+                            {/* <Popconfirm
+                                title="Are you sure to delete product ?"
+                                onConfirm={
+                                    // this.onConfirm1(_id)
+                                    console.log('iddd',_id)
+                                }
                                 onCancel={this.cancel}
                                 okText="Yes"
                                 cancelText="No"
                             >
                                 <a href="#">Delete</a>
-                            </Popconfirm>
+                            </Popconfirm> */}
                         </Space>
                     ),
                 },
@@ -150,14 +155,14 @@ class ListProduct extends Component {
         };
     };
 
-    confirm = (e) => {
-        console.log(e);
-        message.success('Click on Yes');
+    onDeleteProduct = (id) => {
+        console.log(id);
+        deleteProduct(id)
     }
       
     cancel = (e) => {
         console.log(e);
-        message.error('Click on No');
+        message.error('Dont delete');
     }
 
     render() {
@@ -206,4 +211,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { fetchProducts })(withRouter(ListProduct));
+export default connect(mapStateToProps, { fetchProducts, deleteProduct })(withRouter(ListProduct));

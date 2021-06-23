@@ -21,7 +21,7 @@ const ProductItem = ({product, discount}) => {
                                 }
                                 >
                                     {
-                                        discount ? <div className="product__discount__percent">-20%</div> : ''
+                                        product.sale ? <div className="product__discount__percent">-{product.sale} %</div> : ''
                                     }
                                     <ul className="product__item__pic__hover">
                                         <li><a href="#"><i className="fa fa-heart"></i></a></li>

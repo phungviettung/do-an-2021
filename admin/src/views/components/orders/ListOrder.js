@@ -3,7 +3,7 @@ import moment from "moment"
 import { Table, Tag, Space, Input, Avatar , Popconfirm, message} from "antd";
 import {CheckOutlined, CloseOutlined} from "@ant-design/icons"
 import { connect } from "react-redux";
-import { fetchOrders } from "../../../actions/orders";
+import { fetchOrders, deleteOrder, getOrder } from "../../../actions/orders";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -23,6 +23,8 @@ class ListOrder extends Component {
                     title: "Date",
                     dataIndex: "createdAt",
                     key: "createdAt",
+                    // defaultSortOrder: 'descend',
+                    sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
                     render: (text) =>  <div>{moment(new Date(text).toLocaleDateString()).format("MMMM Do YYYY").toString()}</div>
 
                 },
@@ -30,12 +32,25 @@ class ListOrder extends Component {
                     title: "Total",
                     dataIndex: "total",
                     key: "total",
-                    render: (text) => <div> {text} $ </div>
+                    // defaultSortOrder: 'descend',
+                    sorter: (a, b) => a.total - b.total,
+                    render: (text) => <div> {text}.000đ </div>
                 },
                 {
                     title: "Delivered",
                     key: "delivered",
                     dataIndex: "delivered",
+                    filters: [
+                        {
+                          text: 'Deliverd',
+                          value: true,
+                        },
+                        {
+                          text: 'Not Deliverd',
+                          value: false,
+                        },
+                      ],
+                    onFilter: (value, record) => record.delivered == value,
                     render: (text) => <>{
                         text ? (<CheckOutlined style={{color : "green"}} />) : (<CloseOutlined style={{color : "red"}}/>)
                     }</>
@@ -44,6 +59,17 @@ class ListOrder extends Component {
                     title: "Paid",
                     key: "paid",
                     dataIndex: "paid",
+                    filters: [
+                        {
+                          text: 'Paid',
+                          value: true,
+                        },
+                        {
+                          text: 'Not Paid',
+                          value: false,
+                        },
+                      ],
+                    onFilter: (value, record) => record.paid == value,
                     render: (text) => <>{
                         text ? (<CheckOutlined style={{color : "green"}} />) : (<CloseOutlined style={{color : "red"}}/>)
                     }</>
@@ -56,7 +82,7 @@ class ListOrder extends Component {
                             {/* <a>View</a> */}
                             {/* <a onClick={() => this.onEditUser(id)}>Edit</a> */}
                             <Link to={`/orders/detail/${_id}`}>Order Detail</Link>
-                            <Popconfirm
+                            {/* <Popconfirm
                                 title="Are you sure to delete this task?"
                                 onConfirm={this.confirm}
                                 onCancel={this.cancel}
@@ -64,7 +90,8 @@ class ListOrder extends Component {
                                 cancelText="No"
                             >
                                 <a href="#">Delete</a>
-                            </Popconfirm>
+                            </Popconfirm> */}
+                            <a onClick={() => this.onDeleteOrder(_id)}>Delete</a>
                         </Space>
                     ),
                 },
@@ -84,6 +111,19 @@ class ListOrder extends Component {
         }, 2000);
     };
 
+    forceUpdateHandler(){
+        this.forceUpdate();
+    };
+    
+    onDeleteOrder = (id) => {
+        console.log(id);
+        deleteOrder(id)
+        this.forceUpdateHandler()
+        const { key, current, pageSize } = this.state;
+        this.props.fetchOrders({ key, current, pageSize });
+        this.forceUpdateHandler()
+    }
+
     componentDidMount() {
         const { key, current, pageSize, category } = this.state;
         this.props.fetchOrders({ key, current, pageSize, category });
@@ -101,8 +141,10 @@ class ListOrder extends Component {
     };
 
     onSearch = (key) => {
-        this.setState({ key, current: 1 });
-        this.onfetchOrders(key, 1, this.state.category);
+        // this.setState({ key, current: 1 });
+        // // this.onfetchOrders(key, 1, this.state.category);
+       
+        // this.getOrder(key);
     };
 
     onSearchChange = (event) => {
@@ -183,4 +225,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { fetchOrders })(withRouter(ListOrder));
+export default connect(mapStateToProps, { fetchOrders , getOrder})(withRouter(ListOrder));

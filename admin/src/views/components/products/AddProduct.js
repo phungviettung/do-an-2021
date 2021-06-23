@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Form, Row, Col, Input, Button, Typography, Upload, message , InputNumber, Select  } from "antd";
-import { HighlightFilled, LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Form, Row, Col, Input, Button, Typography, Upload, message , InputNumber, Select, Checkbox   } from "antd";
+import { HighlightFilled, LoadingOutlined, PlusOutlined, TransactionOutlined } from '@ant-design/icons';
 import jwt_decode from "jwt-decode";
 
 import { useFormInput } from "../../../utils/hooks";
@@ -37,6 +37,9 @@ function AddProduct({ addProduct,
     const [content, setContent] = useState("");
     const [category, setCategory] = useState("");
     const [material, setMaterial] = useState("");
+    const [isSale, setIsSale] = useState(true);
+    const [sale, setSale] = useState(0);
+    const [checkedState, setCheckedState] = useState(false)
 
     const params = useParams();
 
@@ -63,6 +66,8 @@ function AddProduct({ addProduct,
                 setContent(product.content)
                 setCategory(product.category)
                 setMaterial(product.material)
+                setSale(product.sale)
+                // sale > 0 ? setCheckedState(true) : setCheckedState(false)
             }
         }
     }, [getProductState.success]);
@@ -89,11 +94,11 @@ function AddProduct({ addProduct,
         if (params.id) {
             // create update user actions, create api, tao reducer
             updateProduct(params.id, {
-                title, price, inStock, description, content, category, images: [...imgOldURL, ...media]
+                title, price, inStock, description, content, category, material, sale, images: [...imgOldURL, ...media]
             });
         } else {
             addProduct({
-                title, price, inStock, description, content, category, images: [...imgOldURL, ...media]
+                title, price, inStock, description, content, category, sale, material, images: [...imgOldURL, ...media]
             });
         }
     };
@@ -156,6 +161,16 @@ function AddProduct({ addProduct,
     const onchangeContent = (e) => {
         setContent(e.target.value)
     }
+    function onChangeCheckbox(e) {
+        if (e.target.checked == true) {
+            setIsSale(true)
+        }else {
+            setSale(0)
+            setIsSale(false)
+        }
+        
+        console.log(`checked = ${e.target.checked}`);
+    }
     return (
         <>
             <h3>{params.id ? "Update product" : "Add product"}</h3>
@@ -174,17 +189,25 @@ function AddProduct({ addProduct,
                             </Row>
                             <Row style={{ margin: "10px 0" }}>
                                 {/* <Col span={4}>Title</Col> */}
-                                <Col span={6} style={{ padding: "0px 10px 0px 0 px" }}>
+                                <Col span={4} style={{ padding: "0px 10px 0px 0 px" }}>
                                     Price <br></br>
-                                    <InputNumber defaultValue={1000}
-                                        formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    <InputNumber 
+                                        formatter={value => `${value}`}
                                         parser={value => value.replace(/\$\s?|(,*)/g, '')}
                                         onChange={onChangePrice}
                                         value = {price}
                                         >
                                         </InputNumber >
                                 </Col>
-                                <Col span={6}>
+                                <Col span={5}>
+                                    Discount precent <br></br>
+                                    {/* <Checkbox checked={checkedState} onChange={onChangeCheckbox}>Checkbox</Checkbox> */}
+                                    { isSale && <InputNumber value={sale} onChange={(value) => {
+                                        setSale(value)
+                                        if (params.id) setPrice(Math.round(price - price * sale / 100))
+                                    }}></InputNumber >}
+                                </Col>
+                                <Col span={4}>
                                     Instock <br></br>
                                     <InputNumber value={inStock} onChange={(value) => setInstock(value)}></InputNumber >
                                 </Col>
@@ -197,7 +220,6 @@ function AddProduct({ addProduct,
                                 Content 
                                 <TextArea rows={4} value={content}  onChange={ onchangeContent } ></TextArea>
                             </Row>
-                            
                                 <Col span={12} style={{ marginBottom: "20px" }} >
                                     Category <br></br>
                                     <Select
@@ -244,7 +266,7 @@ function AddProduct({ addProduct,
 
                                 <Button loading={addProductState.loading} onClick={submit}>
                                     Submit
-                                 </Button>
+                                </Button>
                             {addProductState.success ? (
                                 <Text type="success">{addProductState.message}</Text>
                             ) : (

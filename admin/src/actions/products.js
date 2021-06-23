@@ -124,3 +124,41 @@ export const updateProduct = (id, data) => (dispatch) => {
             });
         });
 };
+
+export const deleteProduct = (id) => {
+    // dispatch({ type: type.DELETE_PRODUCT });
+    products
+        .deleteProduct(id)
+        .then((resp) => {
+            return resp
+            // if (resp.data && resp.data.success) {
+                // dispatch({
+                //     type: type.DELETE_PRODUCT_SUCCESS,
+                //     payload: {
+                //         message: resp.data.msg,
+                //     },
+                // });
+            // } else {
+                // dispatch({
+                //     type: type.DELETE_PRODUCT_FAILED,
+                //     payload: {
+                //         message: resp.data.msg,
+                //     },
+                // });
+        //     }
+        })
+        .catch((err) => {
+            console.log("err: ", err.response);
+            return err.response
+            // let message = "Add product failed";
+            // if (err.response && err.response.statusText) {
+            //     message = err.response.statusText;
+            // }
+            // dispatch({
+            //     type: type.DELETE_PRODUCT_FAILED,
+            //     payload: {
+            //         message,
+            //     },
+            // });
+        });
+};

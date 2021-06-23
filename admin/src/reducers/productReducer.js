@@ -15,6 +15,11 @@ const initialState = {
         success: false,
         message: "",
     },
+    deleteProduct: {
+        loading: false,
+        success: false,
+        message: "",
+    },
     getProduct: {
         id: "",
         loading: false,
@@ -139,6 +144,37 @@ export default function productReduce(state = initialState, action = {}) {
                 ...state,
                 updateProduct: {
                     ...state.updateProduct,
+                    loading: false,
+                    message: action.payload.message,
+                    success: false,
+                },
+            };
+            
+        case type.DELETE_PRODUCT:
+            return {
+                ...state,
+                deleteProduct: {
+                    ...state.deleteProduct,
+                    loading: true,
+                    message: "",
+                    success: false,
+                },
+            };
+        case type.DELETE_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                deleteProduct: {
+                    ...state.deleteProduct,
+                    loading: false,
+                    message: action.payload.message,
+                    success: true,
+                },
+            };
+        case type.DELETE_PRODUCT_FAILED:
+            return {
+                ...state,
+                deleteProduct: {
+                    ...state.deleteProduct,
                     loading: false,
                     message: action.payload.message,
                     success: false,

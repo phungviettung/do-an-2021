@@ -6,18 +6,19 @@ export const ACTIONS = {
     ADD_ORDERS: 'ADD_ORDERS',
     ADD_USERS: 'ADD_USERS',
     ADD_CATEGORIES: 'ADD_CATEGORIES',
-    ADD_MATERIAL : 'ADD_MATERIAL'
+    ADD_MATERIAL : 'ADD_MATERIAL',
+    ADD_PRODUCT_SALE : 'ADD_PRODUCT_SALE'
 }
 
 export const addToCart = (product, cart) => {
     if(product.inStock === 0)
-    return ({ type: 'NOTIFY', payload: {error: 'This product is out of stock.'} }) 
+    return ({ type: 'NOTIFY', payload: {error: 'Sản phẩm đã hết hàng '} }) 
 
     const check = cart.every(item => {
         return item._id !== product._id
     })
 
-    if(!check) return ({ type: 'NOTIFY', payload: {error: 'The product has been added to cart.'} }) 
+    if(!check) return ({ type: 'NOTIFY', payload: {error: 'Sản phẩm đã được thêm vào giỏ hàng'} }) 
 
     return ({ type: 'ADD_CART', payload: [...cart, {...product, quantity: 1}] }) 
 }

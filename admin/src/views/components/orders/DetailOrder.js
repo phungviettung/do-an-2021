@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Form, Row, Col, Input, Button, Typography, Upload, message , InputNumber, Select, Tag  } from "antd";
+import { Form, Row, Col, Input, Button, Typography, Upload, message , InputNumber, Select, Tag ,Card } from "antd";
 import {
     CheckCircleOutlined,
     CloseCircleOutlined,
@@ -17,6 +17,7 @@ import moment from "moment"
 
 const { Text } = Typography;
 const { Title } = Typography;
+const { Meta } = Card;
 
 function DetailOrder({ 
                         getOrder, 
@@ -125,13 +126,12 @@ function DetailOrder({
     }
     return (
         <>
-        {JSON.stringify(updateOrderStateDeliver.result.result)}
          <Title level={3}>Order : {id}</Title>
          <Title level={4}>Shipping</Title>
-         <div>Name : {nameUser }</div>
-         <div>Email : {emailUser }</div>
-         <div>Phone : { mobileOrder }</div>
-         <div>Address : { addressOrder }</div>
+         <Title level={4}>Name : {nameUser }</Title>
+         <Title level={4}>Email : {emailUser }</Title>
+         <Title level={4}>Phone : { mobileOrder }</Title>
+         <Title level={4}>Address : { addressOrder }</Title>
 
          {
              updateOrderStateDeliver.result.result ? (
@@ -167,6 +167,7 @@ function DetailOrder({
         
 
         {/* {updateOrderStateDeliver.result.result.delivered} */}
+        <br></br>
          <Title level={4}>Payment</Title>
          {paymentMethod && (<div level={5}>Payment method : {paymentMethod} </div>)}
          {paymentId.length ? (<div level={5}>Payment Id : {paymentId} </div>): ''}
@@ -198,6 +199,7 @@ function DetailOrder({
          <Title level={4}>Order item</Title>
          {
              cart.map(item => (
+
                 <div className="row border-bottom mx-0 p-2 justify-content-betwenn
                 align-items-center" key={item._id} style={{maxWidth: '550px'}}>
                     <img src={item.images[0].url} alt={item.images[0].url}
@@ -214,7 +216,8 @@ function DetailOrder({
                     </span>
         
                 </div>
-            ))
+            ))    
+            
          }
         </>
     );

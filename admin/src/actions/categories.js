@@ -125,3 +125,10 @@ export const updateCategory = (id, data) => (dispatch) => {
             });
         });
 };
+
+export const deleteCategory = (id) => {
+    categories.deleteCategory(id)
+        .then((resp) => {
+            return resp
+        })
+    }

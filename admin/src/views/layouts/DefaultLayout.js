@@ -148,7 +148,7 @@ class DefaultLayout extends React.Component {
                         </div>
                     </Content>
                     <Footer style={{ textAlign: "center" }}>
-                        Ant Design ©2020 TungPV {JSON.stringify(jwt_decode(token))}
+                        Coppy right ©2021 TungPV
                     </Footer>
                 </Layout>
             </Layout>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Table, Tag, Space, Input, Avatar } from "antd";
 import {CheckOutlined, CloseOutlined} from "@ant-design/icons"
 import { connect } from "react-redux";
-import { fetchCategories } from "../../../actions/categories";
+import { fetchCategories, deleteCategory } from "../../../actions/categories";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -35,10 +35,10 @@ class ListCategory extends Component {
                     key: "action",
                     render: ({ _id , root }) => (
                         <Space size="middle">
-                            <a>View</a>
+                            {/* <a>View</a> */}
                             {/* <a onClick={() => this.onEditUser(id)}>Edit</a> */}
                             <Link to={`/categories/edit/${_id}`}>Edit</Link>
-                            <a>Delete</a>
+                            <a onClick={()=> this.onDeleteCategory(_id)} >Delete</a>
                         </Space>
                     ),
                 },
@@ -56,6 +56,14 @@ class ListCategory extends Component {
             this.props.history.push(`/users/edit/${id}`);
         }, 2000);
     };
+    onDeleteCategory = (id) => {
+        console.log(id);
+        deleteCategory(id)
+        this.forceUpdateHandler()
+        const { key, current, pageSize } = this.state;
+        this.props.fetchCategories({ key, current, pageSize });
+        this.forceUpdateHandler()
+    }
 
     componentDidMount() {
         const { key, current, pageSize } = this.state;
@@ -65,17 +73,17 @@ class ListCategory extends Component {
     onfetchProducts = (key, current, category) => {
         // const { key, current } = this.state;
         const { pageSize } = this.state;
-        this.props.fetchProducts({ key, current, pageSize, category });
+        this.props.fetchCategories({ key, current, pageSize, category });
     };
 
     onPageChange = (current) => {
         this.setState({ current });
-        this.onfetchProducts(this.state.key, current, this.state.category);
+        this.fetchCategories(this.state.key, current, this.state.category);
     };
 
     onSearch = (key) => {
         this.setState({ key, current: 1 });
-        this.onfetchProducts(key, 1, this.state.category);
+        this.fetchCategories(key, 1, this.state.category);
     };
 
     onSearchChange = (event) => {
@@ -109,6 +117,10 @@ class ListCategory extends Component {
         };
     };
 
+    forceUpdateHandler(){
+        this.forceUpdate();
+    };
+
     render() {
         const { columns, current, pageSize } = this.state;
         const { list } = this.props;
@@ -116,6 +128,7 @@ class ListCategory extends Component {
 
         return (
             <>
+            {console.log('render')}
                 <Search
                     placeholder="input search text"
                     onSearch={this.onSearch}
@@ -140,10 +153,11 @@ class ListCategory extends Component {
     }
 }
 
+
 function mapStateToProps(state) {
     return {
         list: state.categories.list,
     };
 }
 
-export default connect(mapStateToProps, { fetchCategories })(withRouter(ListCategory));
+export default connect(mapStateToProps, { fetchCategories , deleteCategory})(withRouter(ListCategory));

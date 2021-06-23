@@ -1,6 +1,7 @@
 const baseUrl = process.env.BASE_URL
 
 export const getData = async (url, token) => {
+    url = encodeURI(url)
     const res = await fetch(`${baseUrl}/api/${url}`, {
         method: 'GET',
         headers: {
